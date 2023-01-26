@@ -1,38 +1,41 @@
 ---
 title: "SecMarker"
 description: "Adds a fixed rule marker that can be used as a target in a skipAfter action. A SecMarker directive essentially creates a rule that does nothing and whose only purpose is to carry the given ID."
-syntax: "SecMarker ID|TEXT"
-date: 2020-10-06T08:48:57+00:00
-lastmod: 2020-10-06T08:48:57+00:00
+syntax: "SecMarker [ID|TEXT]"
+default: ""
+date: ""
+lastmod: "2023-01-26T13:50:31&#43;01:00"
 draft: false
 images: []
 weight: 100
 toc: true
-versions: v1.0+
-tinygo: Yes
 type: seclang/directives
 ---
 
-The value can be either a number or a text string. The `SecMarker` directive is available to allow you to choose the best way to implement a skip-over. Here is an example used from the Core Rule Set:
+The value can be either a number or a text string. The SecMarker directive is available to
+allow you to choose the best way to implement a skip-over. Here is an example used from the
+Core Rule Set:
 
-```apache
+```
 SecMarker BEGIN_HOST_CHECK
 
-SecRule &REQUEST_HEADERS:Host "@eq 0" \
-    "id:'960008',skipAfter:END_HOST_CHECK,phase:2,rev:'2.1.1',\
-    t:none,block,msg:'Request Missing a Host Header',\
-    tag:'PROTOCOL_VIOLATION/MISSING_HEADER_HOST',tag:'WASCTC/WASC-21',\
-    tag:'OWASP_TOP_10/A7',tag:'PCI/6.5.10',\
-    severity:'5',setvar:'tx.msg=%{rule.msg}',setvar:tx.anomaly_score=+%{tx.notice_anomaly_score},\
-    setvar:tx.protocol_violation_score=+%{tx.notice_anomaly_score},\
-    setvar:tx.%{rule.id}-PROTOCOL_VIOLATION/MISSING_HEADER-%{matched_var_name}=%{matched_var}"
-SecRule REQUEST_HEADERS:Host "^$" \
-    "id:'960008',phase:2,rev:'2.1.1',t:none,block,msg:'Request Missing a Host Header',\
-    tag:'PROTOCOL_VIOLATION/MISSING_HEADER_HOST',tag:'WASCTC/WASC-21',\
-    tag:'OWASP_TOP_10/A7',tag:'PCI/6.5.10',severity:'5',\
-    setvar:'tx.msg=%{rule.msg}',setvar:tx.anomaly_score=+%{tx.notice_anomaly_score},\
-    setvar:tx.protocol_violation_score=+%{tx.notice_anomaly_score},\
-    setvar:tx.%{rule.id}-PROTOCOL_VIOLATION/MISSING_HEADER-%{matched_var_name}=%{matched_var}"
+	SecRule &amp;REQUEST_HEADERS:Host &#34;@eq 0&#34; \
+		   &#34;id:&#39;960008&#39;,skipAfter:END_HOST_CHECK,phase:2,rev:&#39;2.1.1&#39;,\
+		   t:none,block,msg:&#39;Request Missing a Host Header&#39;,\
+		   tag:&#39;PROTOCOL_VIOLATION/MISSING_HEADER_HOST&#39;,tag:&#39;WASCTC/WASC-21&#39;,\
+		   tag:&#39;OWASP_TOP_10/A7&#39;,tag:&#39;PCI/6.5.10&#39;,\
+		   severity:&#39;5&#39;,setvar:&#39;tx.msg=%{rule.msg}&#39;,setvar:tx.anomaly_score=&#43;%{tx.notice_anomaly_score},\
+		   setvar:tx.protocol_violation_score=&#43;%{tx.notice_anomaly_score},\
+		   setvar:tx.%{rule.id}-PROTOCOL_VIOLATION/MISSING_HEADER-%{matched_var_name}=%{matched_var}&#34;
+
+	SecRule REQUEST_HEADERS:Host &#34;^$&#34; \
+		   &#34;id:&#39;960008&#39;,phase:2,rev:&#39;2.1.1&#39;,t:none,block,msg:&#39;Request Missing a Host Header&#39;,\
+		   tag:&#39;PROTOCOL_VIOLATION/MISSING_HEADER_HOST&#39;,tag:&#39;WASCTC/WASC-21&#39;,\
+		   tag:&#39;OWASP_TOP_10/A7&#39;,tag:&#39;PCI/6.5.10&#39;,severity:&#39;5&#39;,\
+		   setvar:&#39;tx.msg=%{rule.msg}&#39;,setvar:tx.anomaly_score=&#43;%{tx.notice_anomaly_score},\
+		   setvar:tx.protocol_violation_score=&#43;%{tx.notice_anomaly_score},\
+		   setvar:tx.%{rule.id}-PROTOCOL_VIOLATION/MISSING_HEADER-%{matched_var_name}=%{matched_var}&#34;
 
 SecMarker END_HOST_CHECK
 ```
+
